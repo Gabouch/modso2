@@ -16,7 +16,7 @@
 	#head .lead { font-size: 34px; }
 }
 
-/* SMall header */
+/* Small header */
 #smallHead { background:#181015 url( ../images/bg_header_small.jpg) no-repeat; background-size: cover; text-align: center; padding-top:60px; color:white; font-family:"Open sans", Helvetica, Arial; font-weight:300; }
 #smallHead.secondary { height:100px; min-height: 100px; padding-top:0px; }
 	#smallHead .lead { font-family:"Open sans", Helvetica, Arial; font-size:44px; margin-bottom:6px; color:white; line-height:1.15em; } 
