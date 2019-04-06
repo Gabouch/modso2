@@ -23,35 +23,43 @@
 							<h3 class="thin text-center">Créez votre compte</h3>
 							<p class="text-center text-muted">Si vous possédez déjà un compte, <a href="{% url 'signin' %}">Connectez-vous</a> afin de pouvoir utiliser le service. </p>
 							<hr>
-
-							<form action="{% url 'signupResult' %}" method="POST">
+							{% if errors %}
+							<div class="error-list">
+							  {% for error in errors %}
+							  {% autoescape off %}
+								<p>{{ error }}</p>
+							  {% endautoescape %}
+							  {% endfor %}
+							</div>
+							{% endif %}
+							<form action="{% url 'signup' %}" method="POST">
 								{% csrf_token %}
 								<div class="top-margin">
-									<label>Prénom</label>
-									<input type="text" class="form-control" id="prenom" name="prenom">
-								</div>
+										<label>Prenom</label>
+										<input type="text" class="form-control" id="prenom" name="prenom">
+									</div>
 								<div class="top-margin">
 									<label>Nom</label>
 									<input type="text" class="form-control" id="nom" name="nom">
 								</div>
 								<div class="top-margin">
 									<label>Adresse email<span class="text-danger">*</span></label>
-									<input type="text" class="form-control" id="email">
+									<input type="text" class="form-control" id="email" name="email">
 								</div>
 								<div class="top-margin">
 									<label>Nom du parrain <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" id="parrain">
+									<input type="text" class="form-control" id="parrain" name="parrain">
 								</div>
 								
 
 								<div class="row top-margin">
 									<div class="col-sm-6">
 										<label>Mot de passe <span class="text-danger">*</span></label>
-										<input type="text" class="form-control" id="password">
+										<input type="password" class="form-control" id="password" name="password">
 									</div>
 									<div class="col-sm-6">
 										<label>Confirmation du mot de passe <span class="text-danger">*</span></label>
-										<input type="text" class="form-control" id="password_confirm">
+										<input type="password" class="form-control" id="password_confirm" name="password_confirm">
 									</div>
 								</div>
 
