@@ -9,17 +9,12 @@
 	<!-- container -->
 	<div class="container">
 
-		<ol class="breadcrumb">
-			<li><a href="index.html">Home</a></li>
-			<li class="active">Registration</li>
-		</ol>
-
 		<div class="row">
 			
 			<!-- Article main content -->
 			<article class="col-xs-12 maincontent">
 				<header class="page-header">
-					<h1 class="page-title">Registration</h1>
+					<h1 class="page-title">Création de compte</h1>
 				</header>
 				
 				<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -29,28 +24,34 @@
 							<p class="text-center text-muted">Si vous possédez déjà un compte, <a href="{% url 'signin' %}">Connectez-vous</a> afin de pouvoir utiliser le service. </p>
 							<hr>
 
-							<form>
+							<form action="{% url 'signupResult' %}" method="POST">
+								{% csrf_token %}
 								<div class="top-margin">
-									<label>First Name</label>
-									<input type="text" class="form-control">
+									<label>Prénom</label>
+									<input type="text" class="form-control" id="prenom" name="prenom">
 								</div>
 								<div class="top-margin">
-									<label>Last Name</label>
-									<input type="text" class="form-control">
+									<label>Nom</label>
+									<input type="text" class="form-control" id="nom" name="nom">
 								</div>
 								<div class="top-margin">
-									<label>Email Address <span class="text-danger">*</span></label>
-									<input type="text" class="form-control">
+									<label>Adresse email<span class="text-danger">*</span></label>
+									<input type="text" class="form-control" id="email">
 								</div>
+								<div class="top-margin">
+									<label>Nom du parrain <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" id="parrain">
+								</div>
+								
 
 								<div class="row top-margin">
 									<div class="col-sm-6">
-										<label>Password <span class="text-danger">*</span></label>
-										<input type="text" class="form-control">
+										<label>Mot de passe <span class="text-danger">*</span></label>
+										<input type="text" class="form-control" id="password">
 									</div>
 									<div class="col-sm-6">
-										<label>Confirm Password <span class="text-danger">*</span></label>
-										<input type="text" class="form-control">
+										<label>Confirmation du mot de passe <span class="text-danger">*</span></label>
+										<input type="text" class="form-control" id="password_confirm">
 									</div>
 								</div>
 
@@ -59,8 +60,8 @@
 								<div class="row">
 									<div class="col-lg-8">
 										<label class="checkbox">
-											<input type="checkbox"> 
-											I've read the <a href="{% url 'terms_conditions' %}">Terms and Conditions</a>
+											<input type="checkbox" id="check_terms"> 
+											J'ai lu et j'accepte les <a href="{% url 'terms_conditions' %}">Conditions d'utilisation</a>
 										</label>                        
 									</div>
 									<div class="col-lg-4 text-right">

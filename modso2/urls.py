@@ -23,6 +23,7 @@ urlpatterns = [
     path('contact', views.contact, name='contact'),
     path('signin', views.signin, name='signin'),
     path('signup', views.signup, name='signup'),
+    path('signupResult', views.signupResult, name='signupResult'),
     path('terms_conditions', views.termsConditions, name='terms_conditions'),
     path('machines/', include('gestionMachines.urls', namespace='gestionMachines')),
 ]
