@@ -13,3 +13,15 @@ def about(request):
 def contact(request):
     context = {}
     return render(request, 'gestionMachines/contact.html', context)
+
+def signin(request):
+    context = {}
+    return render(request, 'gestionMachines/signin.html', context)
+
+def signup(request):
+    context = {}
+    return render(request, 'gestionMachines/signup.html', context)
+
+def termsConditions(request):
+    context = {}
+    return render(request, 'gestionMachines/terms_conditions.html', context)
