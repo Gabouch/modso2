@@ -7,3 +7,7 @@ modso2/__pycache__/settings.cpython-36.pyc
 modso2/__pycache__/urls.cpython-36.pyc
 gestionMachines/__init__.py
 gestionMachines/migrations/__init__.py
+gestionMachines/__pycache__/forms.cpython-36.pyc
+gestionMachines/__pycache__/models.cpython-36.pyc
+gestionMachines/__pycache__/views.cpython-36.pyc
+*.pyc
