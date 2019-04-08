@@ -1,0 +1,44 @@
+{% extends 'gestionMachines/espaceperso/espaceperso_base.html' %}
+
+{% load static %}
+
+{% block espacePersoContent %}
+    <h3>Modification de vos informations de connexion</h3>
+
+    <form action="{% url 'espacepersoconnexion' %}" method="POST">
+        {% csrf_token %}
+        <!-- <div class="top-margin">
+            <label>Prenom</label>
+            <input type="text" class="form-control" id="prenom" name="prenom">
+        </div>
+        <div class="top-margin">
+            <label>Nom</label>
+            <input type="text" class="form-control" id="nom" name="nom">
+        </div> -->
+        <div class="top-margin">
+            <label>Adresse email</label>
+            <input type="text" class="form-control" id="email" name="email">
+        </div>
+        
+
+        <div class="row top-margin">
+            <div class="col-sm-6">
+                <label>Mot de passe </label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="col-sm-6">
+                <label>Confirmation du mot de passe </label>
+                <input type="password" class="form-control" id="password_confirm" name="password_confirm">
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col text-center">
+                <button class="btn btn-action" type="submit">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+    
+{% endblock %}

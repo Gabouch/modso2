@@ -1,0 +1,13 @@
+{% extends 'gestionMachines/espaceperso/espaceperso_base.html' %}
+
+{% load static %}
+
+{% block espacePersoContent %}
+    <h3>Bienvenue sur votre espace personnel {{user.first_name}} {{user.last_name}}!</h3>
+    <p>C'est ici que vous pouvez mettre à jour les informations liées à votre compte.</p>
+    <br/>
+    <p>Votre adresse mail enregistrée est : <b>{{user.email}}</b></p>
+    <p>Votre adresse enregistrée est : <b>{{ user.modsouser.adresse|default:"Vous n'avez enregistré aucune adresse."}}</b></p>
+    <p>Votre numéro de téléphone enregistré est : <b>{{ user.modsouser.tel|default:"Vous n'avez enregistré aucun numéro de téléphone."}}</b></p>
+
+{% endblock %}

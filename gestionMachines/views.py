@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -123,3 +124,46 @@ def signupResult(request):
 def signout(request):
     logout(request)
     return render(request, 'gestionMachines/signout.html')
+
+# Espace utilisateur
+def espacePerso(request):
+    return render(request, 'gestionMachines/espaceperso/espaceperso.html')
+
+def espacePersoConnexion(request):
+    if request.method == 'POST':
+        prenom = request.POST.get('prenom')
+        nom = request.POST.get('nom')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        password_confirm = request.POST.get('password_confirm')
+
+        user = User.objects.filter(email=request.user.email).first()
+        if user:
+            try:
+                with transaction.atomic():
+                    # # prenom
+                    # if prenom:
+                    #     user.first_name=prenom
+                    #     messages.add_message(request, messages.SUCCESS, "Le prénom a été modifié!")
+                    # # nom
+                    # if nom:
+                    #     user.last_name=nom
+                    #     messages.add_message(request, messages.SUCCESS, "Le nom a été modifié!")
+                    # email
+                    if email:
+                        user.email=email
+                        user.username=email
+                        messages.add_message(request, messages.SUCCESS, "L'email a été modifié!")
+                    # password
+                    if password:
+                        if password == password_confirm:
+                            user.set_password(password)
+                            messages.add_message(request, messages.SUCCESS, "Le mot de passe a été modifié!")
+                        else:
+                            messages.add_message(request, messages.ERROR, "Les mots de passe ne sont pas identiques. Le mot de passe n'a pas été modifié.")
+                    user.save()
+            except IntegrityError as e:
+                messages.add_message(request, messages.ERROR, "Une erreur est survenu durant l'enregistrement de vos informations en base de donnée. Veuillez réessayer. Si l'erreur persiste, merci de contacter le support technique.")
+        return redirect('espaceperso')
+    return render(request, 'gestionMachines/espaceperso/espaceperso_connexion.html')
+    
