@@ -23,7 +23,7 @@ def contact(request):
     context = {}
     return render(request, 'gestionMachines/contact.html', context)
 
-# Enregistrement d'utilisateur
+# Connexion
 def signin(request):
     errors = []
     if request.method == 'POST':
@@ -44,7 +44,7 @@ def signin(request):
     }
     return render(request, 'gestionMachines/signin.html', context)
 
-# Connexion
+# Enregistrement de l'utilisateur
 def signup(request):
     context = {}
     errors = []
