@@ -35,11 +35,11 @@
 							<form action="{% url 'signup' %}" method="POST">
 								{% csrf_token %}
 								<div class="top-margin">
-									<label>Prenom</label>
+									<label>Prenom<span class="text-danger">*</span></label>
 									<input type="text" class="form-control" id="prenom" name="prenom">
 								</div>
 								<div class="top-margin">
-									<label>Nom</label>
+									<label>Nom<span class="text-danger">*</span></label>
 									<input type="text" class="form-control" id="nom" name="nom">
 								</div>
 								<div class="top-margin">

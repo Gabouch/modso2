@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from collections import Counter
+from django.db import transaction, IntegrityError
 
+from .models import MODSOUser
 
 # Page accueil
 def index(request):
@@ -38,6 +40,10 @@ def signup(request):
         password_confirm = request.POST.get('password_confirm')
         check_terms = request.POST.get('check_terms')
 
+        if not prenom:
+            errors.append("Le prénom est obligatoire")
+        if not nom:
+            errors.append("Le nom est obligatoire")
         if not email:
             errors.append("L'email est obligatoire")
         if not parrain:
@@ -51,8 +57,17 @@ def signup(request):
         
         if not errors:
             #validation du parrain
-            if User.objects.get(last_name__icontains=parrain) is not None :
-                pass
+            if User.objects.filter(last_name__icontains=parrain).first() is not None :
+                # validation utilisateur n'existe pas deja
+                if User.objects.filter(email__icontains=email).first() is None:
+                    try:
+                        with transaction.atomic():
+                            user = User.objects.create(first_name=prenom, last_name=nom, email=email)
+                            MODSOUser.objects.create(user=user, nomParrain=parrain)
+                    except IntegrityError:
+                        errors.append("Une erreur serveur est survenue. Merci de réessayer.")
+                else:
+                    errors.append("Cette adresse mail est déjà utilisée.")
             else:
                 errors.append("Le parrain n'existe pas. Merci de renseigner un parrain déjà inscrit ou de contacter le support technique.")
     else:
