@@ -11,3 +11,4 @@ gestionMachines/__pycache__/forms.cpython-36.pyc
 gestionMachines/__pycache__/models.cpython-36.pyc
 gestionMachines/__pycache__/views.cpython-36.pyc
 *.pyc
+/migrations
