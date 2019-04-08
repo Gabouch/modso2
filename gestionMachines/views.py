@@ -10,18 +10,19 @@ from .models import MODSOUser
 
 # Page accueil
 def index(request):
-    context = {}
-    return render(request, 'gestionMachines/index.html', context)
+    return render(request, 'gestionMachines/index.html')
 
 # A propose
 def about(request):
-    context = {}
-    return render(request, 'gestionMachines/about.html', context)
+    return render(request, 'gestionMachines/about.html')
 
 # Contact
 def contact(request):
-    context = {}
-    return render(request, 'gestionMachines/contact.html', context)
+    return render(request, 'gestionMachines/contact.html')
+
+# Termes et conditions
+def termsConditions(request):
+    return render(request, 'gestionMachines/terms_conditions.html')
 
 # Connexion
 def signin(request):
@@ -116,11 +117,6 @@ def signup(request):
 @login_required
 def signupResult(request):
     return render(request, 'gestionMachines/signupResult.html')
-
-# Termes et conditions
-def termsConditions(request):
-    context = {}
-    return render(request, 'gestionMachines/terms_conditions.html', context)
 
 # Deconnexion
 @login_required
