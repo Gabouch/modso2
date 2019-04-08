@@ -59,11 +59,12 @@ def signup(request):
             #validation du parrain
             if User.objects.filter(last_name__icontains=parrain).first() is not None :
                 # validation utilisateur n'existe pas deja
-                if User.objects.filter(email__icontains=email).first() is None:
+                if User.objects.filter(email=email).first() is None:
                     try:
                         with transaction.atomic():
                             user = User.objects.create(first_name=prenom, last_name=nom, email=email)
                             MODSOUser.objects.create(user=user, nomParrain=parrain)
+                            return render(request, 'gestionMachines/signupResult.html', context)
                     except IntegrityError:
                         errors.append("Une erreur serveur est survenue. Merci de réessayer.")
                 else:
