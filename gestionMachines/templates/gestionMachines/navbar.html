@@ -20,7 +20,17 @@
 					</li>
 					<li><a href="{% url 'contact' %}">Contact</a></li>
 					<li><a href="{% url 'about' %}">About</a></li>
-					<li><a class="btn" href="{% url 'signin' %}">CONNEXION</a></li>
+					{% if user.is_authenticated %}
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.first_name }} <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="">Espace personnel</a></li>
+								<li class="active"><a href="{% url 'signout' %}">Deconnexion</a></li>
+							</ul>
+						</li>
+					{% else %}
+						<li><a class="btn" href="{% url 'signin' %}">CONNEXION</a></li>
+					{% endif %}
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>

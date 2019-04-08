@@ -26,4 +26,6 @@ urlpatterns = [
     path('signupResult', views.signupResult, name='signupResult'),
     path('terms_conditions', views.termsConditions, name='terms_conditions'),
     path('machines/', include('gestionMachines.urls', namespace='gestionMachines')),
+    # path('espacepersonnel', )
+    path('signout', views.signout, name='signout')
 ]

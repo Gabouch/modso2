@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from collections import Counter
 from django.db import transaction, IntegrityError
 
@@ -96,6 +97,7 @@ def signup(request):
     return render(request, 'gestionMachines/signup.html', context)
 
 # Post enregistrement utilisateur
+@login_required
 def signupResult(request):
     return render(request, 'gestionMachines/signupResult.html')
 
@@ -103,3 +105,9 @@ def signupResult(request):
 def termsConditions(request):
     context = {}
     return render(request, 'gestionMachines/terms_conditions.html', context)
+
+# Deconnexion
+@login_required
+def signout(request):
+    logout(request)
+    return render(request, 'gestionMachines/signout.html')
