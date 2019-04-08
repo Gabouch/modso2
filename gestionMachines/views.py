@@ -25,7 +25,23 @@ def contact(request):
 
 # Enregistrement d'utilisateur
 def signin(request):
-    context = {}
+    errors = []
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        if User.objects.filter(email=email).first() is not None:
+            userAuth = authenticate(request, username = email, password = password)
+            if userAuth is not None:
+                login(request, userAuth)
+                return redirect('index')
+            else:
+                errors.append(f"Votre mot de passe est incorrect. Merci de réessayer.")
+        else:
+            errors.append(f"Aucun compte n'existe pour cette adresse mail. Merci de créer un compte.")
+    context = {
+        'errors' : errors
+    }
     return render(request, 'gestionMachines/signin.html', context)
 
 # Connexion
