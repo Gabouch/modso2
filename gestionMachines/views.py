@@ -41,7 +41,7 @@ def signup(request):
         if not password or password_confirm:
             errors.append("Le mot de passe est obligatoire")
         if not password is password_confirm:
-            errors.append("Le mot de passe n'est pas cogérent")
+            errors.append("Le mot de passe n'est pas cohérent")
         
         success = True
         message = f"{prenom}, {nom}, {email}, {parrain}, {password}, {password_confirm}, {check_terms}"
