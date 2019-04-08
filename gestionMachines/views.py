@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -76,7 +76,7 @@ def signup(request):
                         # login de l'utilisateur
                         if userAuth is not None:
                             login(request, userAuth)
-                            return render(request, 'gestionMachines/signupResult.html', context)
+                            return redirect('signupResult')
                         else:
                             raise Exception(f"erreur lors de l'authentification de l'utilisateur {user.username} / {user.password}.")
                     except IntegrityError:
@@ -97,26 +97,7 @@ def signup(request):
 
 # Post enregistrement utilisateur
 def signupResult(request):
-    if request.method == 'POST':
-        prenom = request.POST.get('prenom')
-        nom = request.POST.get('nom')
-        email = request.POST.get('email')
-        parrain = request.POST.get('parrain')
-        password = request.POST.get('password')
-        password_confirm = request.POST.get('password_confirm')
-        check_terms = request.POST.get('check_terms')
-        
-        success = True
-        message = f"{prenom}, {nom}, {email}, {parrain}, {password}, {password_confirm}, {check_terms}"
-        context = {
-            'success' : success,
-            'message' : message
-        }
-    context = {
-        'success' : success,
-        'message' : message
-    }
-    return render(request, 'gestionMachines/signupResult.html', context)
+    return render(request, 'gestionMachines/signupResult.html')
 
 # Termes et conditions
 def termsConditions(request):
