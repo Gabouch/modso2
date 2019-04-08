@@ -6,3 +6,6 @@ class MODSOUser(models.Model):
     nomParrain = models.CharField(max_length=200)
     adresse = models.CharField(max_length=200)
     tel = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}, parrain {self.nomParrain}"

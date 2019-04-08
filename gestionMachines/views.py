@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from collections import Counter
 from django.db import transaction, IntegrityError
 
@@ -61,12 +62,27 @@ def signup(request):
                 # validation utilisateur n'existe pas deja
                 if User.objects.filter(email=email).first() is None:
                     try:
+                        user = None
                         with transaction.atomic():
-                            user = User.objects.create(first_name=prenom, last_name=nom, email=email)
+                            # creation user
+                            user = User.objects.create(first_name=prenom, last_name=nom, email=email, username=email)
+                            # creation MODSOUser
                             MODSOUser.objects.create(user=user, nomParrain=parrain)
+                            # Enregistrement du mot de passe
+                            user.set_password(password)
+                            user.save()
+                        # Auth de l'utilisateur
+                        userAuth = authenticate(request, username=email, password=password)
+                        # login de l'utilisateur
+                        if userAuth is not None:
+                            login(request, userAuth)
                             return render(request, 'gestionMachines/signupResult.html', context)
+                        else:
+                            raise Exception(f"erreur lors de l'authentification de l'utilisateur {user.username} / {user.password}.")
                     except IntegrityError:
-                        errors.append("Une erreur serveur est survenue. Merci de réessayer.")
+                        errors.append("Une erreur serveur est survenue lors de l'enrgistrement en base. Merci de contacter le service technique.")
+                    except Exception as e:
+                        errors.append(f"Une erreur serveur est survenue {e.args}  Merci de prévenir le service technique.")
                 else:
                     errors.append("Cette adresse mail est déjà utilisée.")
             else:
