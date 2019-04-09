@@ -9,6 +9,9 @@ from django.db import transaction, IntegrityError
 from django.core.validators import validate_email, ValidationError
 
 from .models import MODSOUser
+from .forms import MODSOUserForm
+
+ERREUR_SERVEUR = "Une erreur est survenu durant l'enregistrement de vos informations en base de donnée. Veuillez réessayer. Si l'erreur persiste, merci de contacter le support technique."
 
 # Page accueil
 def index(request):
@@ -134,6 +137,8 @@ def signout(request):
 def espacePerso(request):
     return render(request, 'gestionMachines/espaceperso/espaceperso.html')
 
+# Modification des infos de connexion
+@login_required
 def espacePersoConnexion(request):
     if request.method == 'POST':
         prenom = request.POST.get('prenom')
@@ -168,7 +173,34 @@ def espacePersoConnexion(request):
                             messages.add_message(request, messages.ERROR, "Les mots de passe ne sont pas identiques. Le mot de passe n'a pas été modifié.")
                     user.save()
             except IntegrityError as e:
-                messages.add_message(request, messages.ERROR, "Une erreur est survenu durant l'enregistrement de vos informations en base de donnée. Veuillez réessayer. Si l'erreur persiste, merci de contacter le support technique.")
+                messages.add_message(request, messages.ERROR, ERREUR_SERVEUR)
         return redirect('espaceperso')
     return render(request, 'gestionMachines/espaceperso/espaceperso_connexion.html')
-    
+
+# Modification des infos perso
+@login_required
+def espacePersoPerso(request):
+    if request.method == 'POST':
+        form = MODSOUserForm(request.POST)
+        if form.is_valid():
+            adresse = form.cleaned_data['adresse']
+            tel = form.cleaned_data['tel']
+            try:
+                user = MODSOUser.objects.filter(user__email=request.user.email).first()
+                if user:
+                    with transaction.atomic():
+                        if adresse:
+                            user.adresse = adresse
+                        if tel:
+                            user.tel = tel
+                        user.save()
+                        print(user.adresse)
+                        print(user.tel)
+            except IntegrityError:
+                messages.add_message(request, messages.ERROR, ERREUR_SERVEUR)
+        else:
+            messages.add_message(request, messages.ERROR, form.errors.items())
+        return redirect('espaceperso')
+    else:
+        form = MODSOUserForm()
+    return render(request, 'gestionMachines/espaceperso/espaceperso_perso.html', {'form' : form})

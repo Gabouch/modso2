@@ -28,5 +28,6 @@ urlpatterns = [
     path('machines/', include('gestionMachines.urls', namespace='gestionMachines')),
     path('espaceperso', views.espacePerso, name='espaceperso'),
     path('espaceperso/infoconnexion', views.espacePersoConnexion, name='espacepersoconnexion'),
+    path('espaceperso/infoperso', views.espacePersoPerso, name='espacepersoperso'),
     path('signout', views.signout, name='signout')
 ]

@@ -1,0 +1,18 @@
+{% extends 'gestionMachines/espaceperso/espaceperso_base.html' %}
+
+{% load static %}
+
+{% block espacePersoContent %}
+    <h3>Modification de vos informations personnelles</h3>
+
+    <form action="{% url 'espacepersoperso' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <hr/>
+        <div class="row">
+            <div class="col text-center">
+                <button class="btn btn-action" type="submit">Mettre à jour</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
