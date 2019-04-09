@@ -204,3 +204,18 @@ def espacePersoPerso(request):
     else:
         form = MODSOUserForm()
     return render(request, 'gestionMachines/espaceperso/espaceperso_perso.html', {'form' : form})
+
+# Suppression du compte
+@login_required
+def suppressioncompte(request):
+    if request.method == 'POST':
+        try:
+            with transaction.atomic():
+                user = User.objects.get(username=request.user.username)
+                logout(request)
+                user.delete()
+        except IntegrityError:
+            messages.add_message(request, messages.ERROR, ERREUR_SERVEUR)
+        return redirect('index')
+
+    return render(request, 'gestionMachines/espaceperso/espaceperso_suppression.html')

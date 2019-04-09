@@ -29,5 +29,6 @@ urlpatterns = [
     path('espaceperso', views.espacePerso, name='espaceperso'),
     path('espaceperso/infoconnexion', views.espacePersoConnexion, name='espacepersoconnexion'),
     path('espaceperso/infoperso', views.espacePersoPerso, name='espacepersoperso'),
+    path('espaceperso/suppression', views.suppressioncompte, name='suppressioncompte'),
     path('signout', views.signout, name='signout')
 ]
