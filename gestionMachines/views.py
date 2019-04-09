@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from collections import Counter
 from django.db import transaction, IntegrityError
+from django.core.validators import validate_email, ValidationError
 
 from .models import MODSOUser
 
@@ -66,6 +67,10 @@ def signup(request):
             errors.append("Le nom est obligatoire")
         if not email:
             errors.append("L'email est obligatoire")
+        try:
+            validate_email(email)
+        except ValidationError:
+            errors.append("L'email est invalide.")
         if not parrain:
             errors.append("Le nom du parrain est obligatoire")
         if not password or not password_confirm:
