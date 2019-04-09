@@ -146,14 +146,14 @@ def espacePersoConnexion(request):
         if user:
             try:
                 with transaction.atomic():
-                    # # prenom
-                    # if prenom:
-                    #     user.first_name=prenom
-                    #     messages.add_message(request, messages.SUCCESS, "Le prénom a été modifié!")
-                    # # nom
-                    # if nom:
-                    #     user.last_name=nom
-                    #     messages.add_message(request, messages.SUCCESS, "Le nom a été modifié!")
+                    # prenom
+                    if prenom:
+                        user.first_name=prenom
+                        messages.add_message(request, messages.SUCCESS, "Le prénom a été modifié!")
+                    # nom
+                    if nom:
+                        user.last_name=nom
+                        messages.add_message(request, messages.SUCCESS, "Le nom a été modifié!")
                     # email
                     if email:
                         user.email=email

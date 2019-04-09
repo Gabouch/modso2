@@ -7,19 +7,14 @@
 
     <form action="{% url 'espacepersoconnexion' %}" method="POST">
         {% csrf_token %}
-        <!-- <div class="top-margin">
+        <div class="top-margin">
             <label>Prenom</label>
             <input type="text" class="form-control" id="prenom" name="prenom">
         </div>
         <div class="top-margin">
             <label>Nom</label>
             <input type="text" class="form-control" id="nom" name="nom">
-        </div> -->
-        <div class="top-margin">
-            <label>Adresse email</label>
-            <input type="text" class="form-control" id="email" name="email">
         </div>
-        
 
         <div class="row top-margin">
             <div class="col-sm-6">
