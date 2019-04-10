@@ -191,8 +191,10 @@ def espacePersoPerso(request):
                     with transaction.atomic():
                         if adresse:
                             user.adresse = adresse
+                            messages.add_message(request, messages.SUCCESS, "L'adresse a été modifiée!")
                         if tel:
                             user.tel = tel
+                            messages.add_message(request, messages.SUCCESS, "Le numéro de téléphone a été modifié!")
                         user.save()
                         print(user.adresse)
                         print(user.tel)
