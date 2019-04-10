@@ -227,9 +227,27 @@ def creerMachine(request):
         form = CreerMachineForm()
     context = {'form' : form}
     return render(request, 'gestionMachines/machines/creermachine.html', context)
-    
+
+ # Lister les machines de l'utilisateur connecté   
 @login_required
-def ListerMachinesUtilisateur(request):
+def listerMachinesUtilisateur(request):
     machines = Machine.objects.filter(user=request.user)
     context = {'machines' : machines}
     return render(request, 'gestionMachines/machines/mesmachines.html', context)
+
+# Lister toutes les machines
+@login_required
+def listerMachines(request):
+    machines = Machine.objects.all()
+    context = {'machines' : machines}
+    return render(request, 'gestionMachines/machines/listemachines.html', context)
+
+# Ajouter une machine
+@login_required
+def ajouterMachine(request):
+    if request.method == 'POST':
+        pass
+    else:
+        pass
+    # context = {'form' : form}
+    return render(request, 'gestionMachines/machines/ajoutermachine.html')

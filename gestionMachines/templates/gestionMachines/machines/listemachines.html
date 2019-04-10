@@ -1,0 +1,55 @@
+{% extends 'gestionMachines/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'gestionMachines/navbar.html' %}
+    {% include 'gestionMachines/header_small.html' %}
+
+    <div class="container">
+
+			<div class="row">
+				
+				<article class="col-sm-8 maincontent">
+					<header class="page-header">
+						<h1 class="page-title">Machines</h1>
+                    </header>
+                    
+                    <h3>Liste des machines</h3>
+                    <ul>
+                        {% if machines %}
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Nom</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Propriétaire</th>
+                                        <th scope="col">Disponible</th>
+                                        <th scope="col">Utilisateur actuel</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for machine in machines %}
+                                        <tr>
+                                            <td>{{ machine.nom}}</td>
+                                            <td>{{ machine.description }}</td>
+                                            <td>{{ machine.user.first_name }} {{ machine.user.last_name}}</td>
+                                            <td>{{ machine.disponible|yesno:"Oui, Non"}}</td>
+                                            {% if machine.disponible %}
+                                                <td> / </td>
+                                            {% else %}
+                                                <td>{{ machine.utilisateur.first_name}} {{ machine.utilisateur.last_name}}</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>Il n'existe aucune machine à emprunter.</p>
+                        {% endif %}
+                    </ul>
+
+				</article>
+			</div>
+		</div>	<!-- /container -->
+{% endblock %}

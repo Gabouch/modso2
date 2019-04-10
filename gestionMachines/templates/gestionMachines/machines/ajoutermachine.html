@@ -1,0 +1,21 @@
+{% extends 'gestionMachines/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'gestionMachines/navbar.html' %}
+    {% include 'gestionMachines/header_small.html' %}
+
+    <div class="container">
+
+			<div class="row">
+				
+				<article class="col-sm-8 maincontent">
+                    <h3>Ajouter une machine</h3>
+                    <form action = "{% url 'machines:' %}" method = "POST">
+                        {{ form }}
+                    </form>
+				</article>
+			</div>
+		</div>	<!-- /container -->
+{% endblock %}

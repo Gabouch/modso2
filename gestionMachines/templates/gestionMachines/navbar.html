@@ -12,10 +12,12 @@
 				<ul class="nav navbar-nav pull-right">
 					<li class="active"><a href="{% url 'index' %}">Home</a></li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Machines<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="sidebar-left.html">Left Sidebar</a></li>
-							<li class="active"><a href="sidebar-right.html">Right Sidebar</a></li>
+							{% if user.is_authenticated %}
+								<li><a href="{% url 'machines:mesmachines' %}">Mes machines</a></li>
+							{% endif %}
+							<li><a href="{% url 'machines:machines' %}">Toutes les machines</a></li>
 						</ul>
 					</li>
 					<li><a href="{% url 'contact' %}">Contact</a></li>

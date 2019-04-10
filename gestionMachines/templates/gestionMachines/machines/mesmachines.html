@@ -16,16 +16,35 @@
                     </header>
                     
                     <h3>Liste de mes machines</h3>
-                    <ul>
-                        {% if machines %}
+                    {% if machines %}
+                    <table class="table table-hover table-dark">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Disponible</th>
+                                <th scope="col">Utilisateur actuel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {% for machine in machines %}
-                                <li>
-                                    {{ machine.nom }}
-                                </li>
+                                <tr>
+                                    <td>{{ machine.nom}}</td>
+                                    <td>{{ machine.description }}</td>
+                                    <td>{{ machine.disponible|yesno:"Oui, Non"}}</td>
+                                    {% if machine.disponible %}
+                                        <td> / </td>
+                                    {% else %}
+                                        <td>{{ machine.utilisateur.first_name}} {{ machine.utilisateur.last_name}}</td>
+                                    {% endif %}
+                                </tr>
                             {% endfor %}
-                        {% else %}
-                            <p>Vous n'avez aucune machine.</p>
-                        {% endif %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <p>Vous n'avez aucune machine.</p>
+                    {% endif %}
+                            
                     </ul>
 
 				</article>
