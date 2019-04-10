@@ -241,13 +241,3 @@ def listerMachines(request):
     machines = Machine.objects.all()
     context = {'machines' : machines}
     return render(request, 'gestionMachines/machines/listemachines.html', context)
-
-# Ajouter une machine
-@login_required
-def ajouterMachine(request):
-    if request.method == 'POST':
-        pass
-    else:
-        pass
-    # context = {'form' : form}
-    return render(request, 'gestionMachines/machines/ajoutermachine.html')
