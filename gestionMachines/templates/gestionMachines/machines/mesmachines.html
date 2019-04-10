@@ -10,7 +10,7 @@
 
 			<div class="row">
 				
-				<article class="col-sm-8 maincontent">
+				<article class="col maincontent">
 					<header class="page-header">
 						<h1 class="page-title">Mes machines</h1>
                     </header>
@@ -29,7 +29,7 @@
                         <tbody>
                             {% for machine in machines %}
                                 <tr>
-                                    <td>{{ machine.nom}}</td>
+                                    <td><a href="{% url 'machines:detail' pk=machine.id %}">{{ machine.nom}}</a></td>
                                     <td>{{ machine.description }}</td>
                                     <td>{{ machine.disponible|yesno:"Oui, Non"}}</td>
                                     {% if machine.disponible %}
@@ -44,12 +44,14 @@
                     {% else %}
                         <p>Vous n'avez aucune machine.</p>
                     {% endif %}
-
-
 				</article>
             </div>
             <div class="row">
-                
+                <div class="col text-center">
+                    <form action="{% url 'machines:creermachine' %}" method="GES">
+                        <button type="submit" class="btn btn-primary">Ajouter une machine</button>
+                    </form>
+                </div>
             </div>
 		</div>	<!-- /container -->
 {% endblock %}

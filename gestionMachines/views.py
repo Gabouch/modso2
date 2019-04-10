@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from collections import Counter
 from django.db import transaction, IntegrityError
 from django.core.validators import validate_email, ValidationError
+from django.views.generic.detail import DetailView
 
 from .models import MODSOUser, Machine
 from .forms import MODSOUserForm, CreerMachineForm
@@ -218,7 +219,7 @@ def creerMachine(request):
                 with transaction.atomic():
                     Machine.objects.create(user=request.user, nom=nom, description=description)
                     messages.add_message(request, messages.SUCCESS, f"La machine {nom} a bien été crée")
-                    return redirect('index')
+                    return redirect('machines:mesmachines')
             except IntegrityError as e:
                 messages.add_message(request, messages.ERROR, ERREUR_SERVEUR + f"Erreur : {str(e)}")
         else:
@@ -241,3 +242,7 @@ def listerMachines(request):
     machines = Machine.objects.all()
     context = {'machines' : machines}
     return render(request, 'gestionMachines/machines/listemachines.html', context)
+
+class MachineView(DetailView):
+    model = Machine
+    template_name='gestionMachines/machines/detail.html'
