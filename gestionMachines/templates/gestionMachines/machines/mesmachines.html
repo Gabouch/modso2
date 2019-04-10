@@ -1,0 +1,34 @@
+{% extends 'gestionMachines/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'gestionMachines/navbar.html' %}
+    {% include 'gestionMachines/header_small.html' %}
+
+    <div class="container">
+
+			<div class="row">
+				
+				<article class="col-sm-8 maincontent">
+					<header class="page-header">
+						<h1 class="page-title">Mes machines</h1>
+                    </header>
+                    
+                    <h3>Liste de mes machines</h3>
+                    <ul>
+                        {% if machines %}
+                            {% for machine in machines %}
+                                <li>
+                                    {{ machine.nom }}
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <p>Vous n'avez aucune machine.</p>
+                        {% endif %}
+                    </ul>
+
+				</article>
+			</div>
+		</div>	<!-- /container -->
+{% endblock %}

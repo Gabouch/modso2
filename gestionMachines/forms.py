@@ -1,5 +1,5 @@
-from django.forms import ModelForm, TextInput
-from .models import MODSOUser
+from django.forms import ModelForm, TextInput, Textarea
+from .models import MODSOUser, Machine
 
 class MODSOUserForm(ModelForm):
 
@@ -14,4 +14,14 @@ class MODSOUserForm(ModelForm):
         widgets = {
             'adresse': TextInput(attrs={'class': 'form-control'}),
             'tel': TextInput(attrs={'class': 'form-control'}),
+        }
+
+class CreerMachineForm(ModelForm):
+
+    class Meta:
+        model = Machine
+        fields = ['nom', 'description']
+        widgets = {
+            'nom' : TextInput(attrs={'class': 'form-control'}),
+            'description' : Textarea(attrs={'class': 'form-control'}),
         }

@@ -15,20 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
+
 from gestionMachines import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('about', views.about, name='about'),
-    path('contact', views.contact, name='contact'),
+    path('', TemplateView.as_view(template_name='gestionMachines/index.html'), name='index'),
+    path('about', TemplateView.as_view(template_name='gestionMachines/about.html'), name='about'), 
+    path('contact', TemplateView.as_view(template_name='gestionMachines/contact.html'), name='contact'), 
+    path('terms_conditions', TemplateView.as_view(template_name='gestionMachines/terms_conditions.html'), name='terms_conditions'), 
     path('signin', views.signin, name='signin'),
     path('signup', views.signup, name='signup'),
     path('signupResult', views.signupResult, name='signupResult'),
-    path('terms_conditions', views.termsConditions, name='terms_conditions'),
-    path('machines/', include('gestionMachines.urls', namespace='gestionMachines')),
     path('espaceperso', views.espacePerso, name='espaceperso'),
     path('espaceperso/infoconnexion', views.espacePersoConnexion, name='espacepersoconnexion'),
     path('espaceperso/infoperso', views.espacePersoPerso, name='espacepersoperso'),
     path('espaceperso/suppression', views.suppressioncompte, name='suppressioncompte'),
-    path('signout', views.signout, name='signout')
+    path('signout', views.signout, name='signout'),
+    path('machines/', include('gestionMachines.urls', namespace='machines')),
 ]

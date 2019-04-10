@@ -8,26 +8,10 @@ from collections import Counter
 from django.db import transaction, IntegrityError
 from django.core.validators import validate_email, ValidationError
 
-from .models import MODSOUser
-from .forms import MODSOUserForm
+from .models import MODSOUser, Machine
+from .forms import MODSOUserForm, CreerMachineForm
 
 ERREUR_SERVEUR = "Une erreur est survenu durant l'enregistrement de vos informations en base de donnée. Veuillez réessayer. Si l'erreur persiste, merci de contacter le support technique."
-
-# Page accueil
-def index(request):
-    return render(request, 'gestionMachines/index.html')
-
-# A propose
-def about(request):
-    return render(request, 'gestionMachines/about.html')
-
-# Contact
-def contact(request):
-    return render(request, 'gestionMachines/contact.html')
-
-# Termes et conditions
-def termsConditions(request):
-    return render(request, 'gestionMachines/terms_conditions.html')
 
 # Connexion
 def signin(request):
@@ -109,7 +93,7 @@ def signup(request):
                     except IntegrityError:
                         errors.append("Une erreur serveur est survenue lors de l'enrgistrement en base. Merci de contacter le service technique.")
                     except Exception as e:
-                        errors.append(f"Une erreur serveur est survenue {e.args}  Merci de prévenir le service technique.")
+                        errors.append(f"Une erreur serveur est survenue {str(e)}  Merci de prévenir le service technique.")
                 else:
                     errors.append("Cette adresse mail est déjà utilisée.")
             else:
@@ -173,7 +157,7 @@ def espacePersoConnexion(request):
                             messages.add_message(request, messages.ERROR, "Les mots de passe ne sont pas identiques. Le mot de passe n'a pas été modifié.")
                     user.save()
             except IntegrityError as e:
-                messages.add_message(request, messages.ERROR, ERREUR_SERVEUR)
+                messages.add_message(request, messages.ERROR, ERREUR_SERVEUR + f"Erreur : {str(e)}")
         return redirect('espaceperso')
     return render(request, 'gestionMachines/espaceperso/espaceperso_connexion.html')
 
@@ -221,3 +205,31 @@ def suppressioncompte(request):
         return redirect('index')
 
     return render(request, 'gestionMachines/espaceperso/espaceperso_suppression.html')
+
+# Creation d'une nouvelle machine
+@login_required
+def creerMachine(request):
+    if request.method == 'POST':
+        form = CreerMachineForm(request.POST)
+        if form.is_valid():
+            nom = form.cleaned_data['nom']
+            description = form.cleaned_data['description']
+            try:
+                with transaction.atomic():
+                    Machine.objects.create(user=request.user, nom=nom, description=description)
+                    messages.add_message(request, messages.SUCCESS, f"La machine {nom} a bien été crée")
+                    return redirect('index')
+            except IntegrityError as e:
+                messages.add_message(request, messages.ERROR, ERREUR_SERVEUR + f"Erreur : {str(e)}")
+        else:
+            messages.add_message(request, messages.ERROR, "Le formulaire n'est pas valide.")
+    else:
+        form = CreerMachineForm()
+    context = {'form' : form}
+    return render(request, 'gestionMachines/machines/creermachine.html', context)
+    
+@login_required
+def ListerMachinesUtilisateur(request):
+    machines = Machine.objects.filter(user=request.user)
+    context = {'machines' : machines}
+    return render(request, 'gestionMachines/machines/mesmachines.html', context)

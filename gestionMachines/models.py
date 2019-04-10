@@ -9,3 +9,11 @@ class MODSOUser(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}, parrain {self.nomParrain}"
+
+class Machine(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='proprietaire')
+    nom =  models.CharField(max_length=200)
+    description = models.TextField(max_length=500)
+    disponible = models.BooleanField(default=True)
+    utilisateur_actuel = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='utilisateur', null=True)
+

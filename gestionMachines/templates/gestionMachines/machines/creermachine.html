@@ -1,0 +1,50 @@
+{% extends 'gestionMachines/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'gestionMachines/navbar.html' %}
+    {% include 'gestionMachines/header_small.html' %}
+    <br/>
+    <!-- container -->
+	<div class="container">
+
+		<div class="row">
+			
+			<!-- Article main content -->
+			<article class="col-xs-12 maincontent">
+
+				<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h3 class="thin text-center">Créez une machine</h3>
+							<hr>
+							{% if errors %}
+							<div class="error-list">
+							  {% for error in errors %}
+							  {% autoescape off %}
+								<p>{{ error }}</p>
+							  {% endautoescape %}
+							  {% endfor %}
+							</div>
+                            {% endif %}
+                            
+							<form action="{% url 'machines:creermachine' %}" method="POST">
+								{% csrf_token %}
+								{{ form }}
+								<hr>
+									<div class="col text-center">
+										<button class="btn btn-action" type="submit">Créer ma machine</button>
+									</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+				
+			</article>
+			<!-- /Article -->
+
+		</div>
+	</div>	<!-- /container -->
+{% endblock %}
