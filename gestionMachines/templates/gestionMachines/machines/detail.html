@@ -7,14 +7,14 @@
     {% include 'gestionMachines/header_small.html' %}
 
     <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">{{machine.nom}}</h1>
+        </header>
         <div class="row">
-            <article class="col maincontent">
-                <header class="page-header">
-                    <h1 class="page-title">{{machine.nom}}</h1>
-                </header>
+            <article class="maincontent col-sm-8">
                 
                 <p><b>Desciption :</b> {{machine.description}}</p>
-                <p><b>Disponible</b>
+                <p><b>Disponible : </b>
                 {% if machine.disponible %}
                     <span class="label label-success">oui</span>
                     {% else %}
@@ -23,9 +23,11 @@
                 {% endif %}
                 </p>
                 {% if machine.photo %}
-                    <p>
-                        <b>Photo : </b>
-                        <img src="{{ machine.photo.url }}" alt="{{ machine.photo.url }}">
+                    <p class="row">
+                        <b class="col">Photo : </b>
+                        <span class="col " style="text-align: center;">
+                            <img src="{{ machine.photo.url }}" alt="{{ machine.photo.url }}" width= "80%">
+                        </span>
                     </p>
                 {% else %}
                     <p>Il n'y a pas de photo pour cette machine.</p>
@@ -33,5 +35,18 @@
                 
             </article>
         </div>
+        <br>
+        <div class="row">
+            <div class="col text-center">
+                <a href="#"  class="btn btn-primary" aria-haspopup="true" aria-expanded="false">
+                    Modifier la machine
+                </a>
+                <a href="#" class="btn btn-danger" aria-haspopup="true" aria-expanded="false">
+                    Supprimer la machine
+                </a>
+            </div>
+        </div>
     </div>	<!-- /container -->
+    <br>
+    <br>
 {% endblock %}
