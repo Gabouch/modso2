@@ -22,6 +22,14 @@
                     <p><b>Utilisateur :</b> {{ machine.utilisateur_actuel.first_name }} {{ machine.utilisateur_actuel.last_name }}</p>
                 {% endif %}
                 </p>
+                {% if machine.photo %}
+                    <p>
+                        <b>Photo : </b>
+                        <img src="{{ machine.photo.url }}" alt="{{ machine.photo.url }}">
+                    </p>
+                {% else %}
+                    <p>Il n'y a pas de photo pour cette machine.</p>
+                {% endif %}
                 
             </article>
         </div>

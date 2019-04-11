@@ -17,7 +17,7 @@ class Machine(models.Model):
     description = models.TextField(max_length=500)
     disponible = models.BooleanField(default=True)
     utilisateur_actuel = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='utilisateur', null=True)
-    photo = models.ImageField(upload_to='machines', null = True)
+    photo = models.ImageField(upload_to='machines', null = True, blank=True)
 
     def __str__(self):
         return f"{self.nom}"

@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea
+from django.forms import ModelForm, TextInput, Textarea, ImageField
 from .models import MODSOUser, Machine
 
 class MODSOUserForm(ModelForm):
@@ -19,7 +19,7 @@ class MODSOUserForm(ModelForm):
 class CreerMachineForm(ModelForm):
     class Meta:
         model = Machine
-        fields = ['nom', 'description']
+        fields = ['nom', 'description', 'photo']
         widgets = {
             'nom' : TextInput(attrs={'class': 'form-control'}),
             'description' : Textarea(attrs={'class': 'form-control'}),

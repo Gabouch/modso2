@@ -29,7 +29,7 @@
 							</div>
 							{% endif %}
                             
-							<form action="{% url 'machines:creermachine' %}" method="POST">
+							<form action="{% url 'machines:creermachine' %}" method="POST" enctype="multipart/form-data">
 								{% csrf_token %}
 								{{ form.as_p }}
 								<hr>
