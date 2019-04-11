@@ -10,4 +10,5 @@ urlpatterns = [
     path('mesmachines', views.listerMachinesUtilisateur, name='mesmachines'),
     path('machines', views.listerMachines, name='machines'),
     path('machine/<int:pk>/', views.MachineView.as_view(), name='detail'),
+    path('supprimermachine/<int:pk>', views.supprimerMachine, name='supprimermachine'),
 ]

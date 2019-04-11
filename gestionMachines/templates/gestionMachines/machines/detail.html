@@ -41,9 +41,30 @@
                 <a href="#"  class="btn btn-primary" aria-haspopup="true" aria-expanded="false">
                     Modifier la machine
                 </a>
-                <a href="#" class="btn btn-danger" aria-haspopup="true" aria-expanded="false">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSupprMachine">
                     Supprimer la machine
-                </a>
+                </button>
+                    
+                <!-- Modal -->
+                <div class="modal fade" id="modalSupprMachine" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Attention</h4>
+                            </div>
+                            <div class="modal-body">
+                                Vous êtes sur le point de supprimer la machine {{machine.nom}}.
+                                Cette action est irréversible.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                <a href="{% url 'machines:supprimermachine' pk=machine.pk %}" class="btn btn-primary">Supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>	<!-- /container -->
