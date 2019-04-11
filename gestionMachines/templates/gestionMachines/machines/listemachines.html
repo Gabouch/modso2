@@ -21,6 +21,7 @@
                             <table class="table table-hover">
                                 <thead class="thead-dark">
                                     <tr>
+                                        <th scope="col"></th>
                                         <th scope="col">Nom</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Propriétaire</th>
@@ -31,10 +32,15 @@
                                 <tbody>
                                     {% for machine in machines %}
                                         <tr>
+                                            <td><a href="{% url 'machines:detail' pk=machine.id %}" class="thumbnail"><img src="{{ machine.photo.url }}" alt="Photo" style="height: 100px"></a></td>
                                             <td>{{ machine.nom}}</td>
                                             <td>{{ machine.description }}</td>
                                             <td>{{ machine.user.first_name }} {{ machine.user.last_name}}</td>
-                                            <td>{{ machine.disponible|yesno:"Oui, Non"}}</td>
+                                            {% if machine.disponible %}
+                                                <td> <span class="label label-success">oui</span> </td>
+                                            {% else %}
+                                                <td> <span class="label label-danger">non</span> </td>
+                                            {% endif %}
                                             {% if machine.disponible %}
                                                 <td> / </td>
                                             {% else %}
