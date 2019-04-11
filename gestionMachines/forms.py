@@ -24,3 +24,12 @@ class CreerMachineForm(ModelForm):
             'nom' : TextInput(attrs={'class': 'form-control'}),
             'description' : Textarea(attrs={'class': 'form-control'}),
         }
+
+class ModifierMachineForm(ModelForm):
+    class Meta:
+        model = Machine
+        fields = ['nom', 'description', 'photo']
+        widgets = {
+            'nom' : TextInput(attrs={'class': 'form-control'}),
+            'description' : Textarea(attrs={'class': 'form-control'}),
+        }

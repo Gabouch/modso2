@@ -8,10 +8,11 @@ from collections import Counter
 from django.db import transaction, IntegrityError
 from django.core.validators import validate_email, ValidationError
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import MODSOUser, Machine
-from .forms import MODSOUserForm, CreerMachineForm
+from .forms import MODSOUserForm, CreerMachineForm, ModifierMachineForm
 
 ERREUR_SERVEUR = "Une erreur est survenu durant l'enregistrement de vos informations en base de donnée. Veuillez réessayer. Si l'erreur persiste, merci de contacter le support technique."
 
@@ -233,12 +234,29 @@ class CreerMachineView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS, f"La machine {form.instance.nom} a bien été créée.")
         return super().form_valid(form)
 
+class ModifierMachineView(UpdateView):
+    form_class = ModifierMachineForm
+    model = Machine
+    template_name = 'gestionMachines/machines/modifiermachine.html'
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, f"La machine {form.instance.nom} a bien été modifiée.")
+        return super().form_valid(form)
+
+@login_required
 def supprimerMachine(request, pk):
     try:
-        Machine.objects.get(pk=pk).delete()
+        machine = Machine.objects.get(pk=pk)
+        if request.user == machine.user:
+            machine.delete()
+            messages.add_message(request, messages.SUCCESS, f"La machine {machine.nom} a bien été supprimée.")
+            return redirect('machines:mesmachines')
+        else:
+            messages.add_message(request, messages.ERROR, "Vous n'avez pas le droit de supprimer cette machine.")
+    except ObjectDoesNotExist as e:
+        messages.add_message(request, messages.ERROR, f"Une erreur s'est produite lors de la suppression de la machine : {str(e)}")
         return redirect('machines:mesmachines')
-    except DoesNotExist as e:
-        messages.add_message(request, massages.ERROR, f"Une erreur s'est produite lors de la suppression de la machine : {str(e)}")
-    pass
+    

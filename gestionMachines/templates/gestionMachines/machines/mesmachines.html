@@ -1,11 +1,8 @@
-{% extends 'gestionMachines/base.html' %}
+{% extends 'gestionMachines/machines/base_machines.html' %}
 
 {% load static %}
 
-{% block content %}
-    {% include 'gestionMachines/navbar.html' %}
-    {% include 'gestionMachines/header_small.html' %}
-
+{% block machines_content %}
     <div class="container">
 
 			<div class="row">
@@ -30,7 +27,14 @@
                         <tbody>
                             {% for machine in machines %}
                                 <tr>
-                                    <td><a href="{% url 'machines:detail' pk=machine.id %}" class="thumbnail"><img src="{{ machine.photo.url }}" alt="Photo" style="height: 100px"></a></td>
+                                    <td><a href="{% url 'machines:detail' pk=machine.id %}" class="thumbnail">
+                                        {% if machine.photo %}
+                                            <img src="{{ machine.photo.url }}" alt="Photo" style="height: 100px">
+                                        {% else %}
+                                            <img src="{% static 'gestionMachines/images/2.jpg' %}" alt="Photo" style="height: 100px">
+                                        {% endif%}
+                                        </a>
+                                    </td>
                                     <td>{{ machine.nom}}</td>
                                     <td>{{ machine.description }}</td>
                                     {% if machine.disponible %}

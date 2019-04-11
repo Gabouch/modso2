@@ -1,10 +1,8 @@
-{% extends 'gestionMachines/base.html' %}
+{% extends 'gestionMachines/machines/base_machines.html' %}
 
 {% load static %}
 
-{% block content %}
-    {% include 'gestionMachines/navbar.html' %}
-    {% include 'gestionMachines/header_small.html' %}
+{% block machines_content %}
 
     <div class="container">
         <header class="page-header">
@@ -36,37 +34,40 @@
             </article>
         </div>
         <br>
-        <div class="row">
-            <div class="col text-center">
-                <a href="#"  class="btn btn-primary" aria-haspopup="true" aria-expanded="false">
-                    Modifier la machine
-                </a>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSupprMachine">
-                    Supprimer la machine
-                </button>
-                    
-                <!-- Modal -->
-                <div class="modal fade" id="modalSupprMachine" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Attention</h4>
-                            </div>
-                            <div class="modal-body">
-                                Vous êtes sur le point de supprimer la machine {{machine.nom}}.
-                                Cette action est irréversible.
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                <a href="{% url 'machines:supprimermachine' pk=machine.pk %}" class="btn btn-primary">Supprimer</a>
+        {% if user == machine.user %}
+            <div class="row">
+                <div class="col text-center">
+                    <a href="{% url 'machines:modifiermachine' pk=machine.pk %}"  class="btn btn-primary" aria-haspopup="true" aria-expanded="false">
+                        Modifier la machine
+                    </a>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSupprMachine">
+                        Supprimer la machine
+                    </button>
+                        
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalSupprMachine" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Attention</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Vous êtes sur le point de supprimer la machine {{machine.nom}}.
+                                    Cette action est irréversible.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                    <a href="{% url 'machines:supprimermachine' pk=machine.pk %}" class="btn btn-primary">Supprimer</a>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>	<!-- /container -->
     <br>
     <br>
