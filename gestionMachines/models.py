@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class MODSOUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -16,4 +17,10 @@ class Machine(models.Model):
     description = models.TextField(max_length=500)
     disponible = models.BooleanField(default=True)
     utilisateur_actuel = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='utilisateur', null=True)
+    photo = models.ImageField(upload_to='machines', null = True)
 
+    def __str__(self):
+        return f"{self.nom}"
+
+    def get_absolute_url(self):
+        return reverse('machines:detail', kwargs={'pk':self.pk})

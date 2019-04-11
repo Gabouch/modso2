@@ -17,7 +17,6 @@ class MODSOUserForm(ModelForm):
         }
 
 class CreerMachineForm(ModelForm):
-
     class Meta:
         model = Machine
         fields = ['nom', 'description']

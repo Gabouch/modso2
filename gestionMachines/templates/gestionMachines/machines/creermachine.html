@@ -27,11 +27,11 @@
 							  {% endautoescape %}
 							  {% endfor %}
 							</div>
-                            {% endif %}
+							{% endif %}
                             
 							<form action="{% url 'machines:creermachine' %}" method="POST">
 								{% csrf_token %}
-								{{ form }}
+								{{ form.as_p }}
 								<hr>
 									<div class="col text-center">
 										<button class="btn btn-action" type="submit">Créer ma machine</button>

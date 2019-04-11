@@ -8,6 +8,7 @@ from collections import Counter
 from django.db import transaction, IntegrityError
 from django.core.validators import validate_email, ValidationError
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 
 from .models import MODSOUser, Machine
 from .forms import MODSOUserForm, CreerMachineForm
@@ -208,26 +209,26 @@ def suppressioncompte(request):
     return render(request, 'gestionMachines/espaceperso/espaceperso_suppression.html')
 
 # Creation d'une nouvelle machine
-@login_required
-def creerMachine(request):
-    if request.method == 'POST':
-        form = CreerMachineForm(request.POST)
-        if form.is_valid():
-            nom = form.cleaned_data['nom']
-            description = form.cleaned_data['description']
-            try:
-                with transaction.atomic():
-                    Machine.objects.create(user=request.user, nom=nom, description=description)
-                    messages.add_message(request, messages.SUCCESS, f"La machine {nom} a bien été crée")
-                    return redirect('machines:mesmachines')
-            except IntegrityError as e:
-                messages.add_message(request, messages.ERROR, ERREUR_SERVEUR + f"Erreur : {str(e)}")
-        else:
-            messages.add_message(request, messages.ERROR, "Le formulaire n'est pas valide.")
-    else:
-        form = CreerMachineForm()
-    context = {'form' : form}
-    return render(request, 'gestionMachines/machines/creermachine.html', context)
+# @login_required
+# def creerMachine(request):
+#     if request.method == 'POST':
+#         form = CreerMachineForm(request.POST)
+#         if form.is_valid():
+#             nom = form.cleaned_data['nom']
+#             description = form.cleaned_data['description']
+#             try:
+#                 with transaction.atomic():
+#                     Machine.objects.create(user=request.user, nom=nom, description=description)
+#                     messages.add_message(request, messages.SUCCESS, f"La machine {nom} a bien été crée")
+#                     return redirect('machines:mesmachines')
+#             except IntegrityError as e:
+#                 messages.add_message(request, messages.ERROR, ERREUR_SERVEUR + f"Erreur : {str(e)}")
+#         else:
+#             messages.add_message(request, messages.ERROR, "Le formulaire n'est pas valide.")
+#     else:
+#         form = CreerMachineForm()
+#     context = {'form' : form}
+#     return render(request, 'gestionMachines/machines/creermachine.html', context)
 
  # Lister les machines de l'utilisateur connecté   
 @login_required
@@ -246,3 +247,12 @@ def listerMachines(request):
 class MachineView(DetailView):
     model = Machine
     template_name='gestionMachines/machines/detail.html'
+
+# Creation de vue de creation de machine
+class CreerMachineView(CreateView):
+    form_class = CreerMachineForm
+    template_name='gestionMachines/machines/creermachine.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
