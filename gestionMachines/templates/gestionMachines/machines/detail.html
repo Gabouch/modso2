@@ -10,8 +10,7 @@
         </header>
         <div class="row">
             <article class="maincontent col-sm-8">
-                
-                <p><b>Desciption :</b> {{machine.description}}</p>
+                <p><b>Description :</b> {{machine.description}}</p>
                 <p><b>Disponible : </b>
                 {% if machine.disponible %}
                     <span class="label label-success">oui</span>
@@ -32,6 +31,19 @@
                 {% endif %}
                 
             </article>
+            {% if user != machine.user %}
+            <aside class="col-sm-4 sidebar sidebar-right">
+
+                <div class="thumbnail">
+                    <h4><b>Contacter le propriétaire</b></h4>
+                    <ul class="list-unstyled list-spaces">
+                        <li><p><b>Nom : </b><span style="float: right">{{machine.user.first_name}} {{machine.user.last_name}}</span></p></li>
+                        <li><p><b>Téléphone : </b><span style="float: right">{{machine.user.modsouser.tel}}</span></p></li>
+                        <li><p><b>Adresse : </b><span style="float: right">{{ machine.user.modsouser.adresse }}</p></span></span></p></li>
+                    </ul>
+                </div>
+            </aside>
+            {% endif %}
         </div>
         <br>
         {% if user == machine.user %}
