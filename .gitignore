@@ -1,6 +1,5 @@
 manage.py
 modso2/__init__.py
-modso2/settings.py
 gestionMachines/__init__.py
 *.pyc
 __pycache__
