@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'ey#qq5$24u$s)kr2elavt$%-1kt*p^^#k(#zh
 # Application definition
 
 INSTALLED_APPS = [
-    'gestionMachines',
+    # 'gestionMachines',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
