@@ -1,4 +1,3 @@
-manage.py
 modso2/__init__.py
 gestionMachines/__init__.py
 *.pyc
