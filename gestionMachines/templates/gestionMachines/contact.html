@@ -25,28 +25,25 @@
 					<form>
 						<div class="row">
 							<div class="col-sm-4">
-								<input class="form-control" type="text" placeholder="Name">
+								<input class="form-control" type="text" placeholder="Nom et prénom">
 							</div>
 							<div class="col-sm-4">
 								<input class="form-control" type="text" placeholder="Email">
 							</div>
 							<div class="col-sm-4">
-								<input class="form-control" type="text" placeholder="Phone">
+								<input class="form-control" type="text" placeholder="Téléphone">
 							</div>
 						</div>
 						<br>
 						<div class="row">
 							<div class="col-sm-12">
-								<textarea placeholder="Type your message here..." class="form-control" rows="9"></textarea>
+								<textarea placeholder="Votre message..." class="form-control" rows="9"></textarea>
 							</div>
 						</div>
 						<br>
 						<div class="row">
-							<div class="col-sm-6">
-								<label class="checkbox"><input type="checkbox"> Sign up for newsletter</label>
-							</div>
 							<div class="col-sm-6 text-right">
-								<input class="btn btn-action" type="submit" value="Send message">
+								<input class="btn btn-action" type="button" value="Envoyer" onclick="lol()">
 							</div>
 						</div>
 					</form>
@@ -54,28 +51,15 @@
 			</article>
 			<!-- /Article -->
 			
-			<!-- Sidebar -->
-			<aside class="col-sm-3 sidebar sidebar-right">
-
-				<div class="widget">
-					<h4>Address</h4>
-					<address>
-						2002 Holcombe Boulevard, Houston, TX 77030, USA
-					</address>
-					<h4>Phone:</h4>
-					<address>
-						(713) 791-1414
-					</address>
-				</div>
-
-			</aside>
-			<!-- /Sidebar -->
-
 		</div>
 	</div>	<!-- /container -->
 	
 	<section class="container-full top-space">
 		<div id="map"></div>
 	</section>
-
+	<script type="text/javascript">
+		function lol(){
+			alert("Désolé, cette fonctionnalité n'est pas implémentée...\n Si vous souhaitez nous contacter pour remonter ce bug, n'hésitez pas à utiliser le formulaire ci-dessous!")
+		}
+	</script>
 {% endblock %}
