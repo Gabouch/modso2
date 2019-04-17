@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import dj_database_url
+import django_heroku
+
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,24 +29,24 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'ey#qq5$24u$s)kr2elavt$%-1kt*p^^#k(#zh
 # Application definition
 
 INSTALLED_APPS = [
-    # 'gestionMachines',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gestionMachines',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'modso2.urls'
@@ -117,35 +118,34 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
-
 LOGIN_URL = 'signin'
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
 
+
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'modso2/media')
 MEDIA_URL = '/media/'
 
 # PROD settings
 if os.environ.get('ENV') == 'PROD':
+    django_heroku.settings(locals())
     DEBUG = False
     ALLOWED_HOSTS = ['modso.herokuapp.com']
     
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
     STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    STATIC_URL = '/static/'
 
     STATICFILES_DIRS = (
         os.path.join(PROJECT_ROOT, 'static'),
     )
     
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
+    # db_from_env = dj_database_url.config(conn_max_age=500)
+    # DATABASES['default'].update(db_from_env)
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else :
