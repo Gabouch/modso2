@@ -145,9 +145,6 @@ if os.environ.get('ENV') == 'PROD':
     DEBUG = False
     ALLOWED_HOSTS = ['modso.herokuapp.com']
     
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
-
 else :
 # DEBUG settings
     DEBUG = True
