@@ -125,29 +125,29 @@ MESSAGE_TAGS = {
 }
 
 
+django_heroku.settings(locals())
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'modso2/media')
 MEDIA_URL = '/media/'
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # PROD settings
 if os.environ.get('ENV') == 'PROD':
-    django_heroku.settings(locals())
     DEBUG = False
     ALLOWED_HOSTS = ['modso.herokuapp.com']
-    
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-    STATIC_URL = '/static/'
-
-    STATICFILES_DIRS = (
-        os.path.join(PROJECT_ROOT, 'static'),
-    )
     
     # db_from_env = dj_database_url.config(conn_max_age=500)
     # DATABASES['default'].update(db_from_env)
 
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else :
 # DEBUG settings
     DEBUG = True
