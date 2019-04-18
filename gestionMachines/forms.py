@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea, ImageField
+from django.forms import ModelForm, TextInput, Textarea, ImageField, CharField, Form
 from .models import MODSOUser, Machine
 
 class MODSOUserForm(ModelForm):
@@ -33,3 +33,10 @@ class ModifierMachineForm(ModelForm):
             'nom' : TextInput(attrs={'class': 'form-control'}),
             'description' : Textarea(attrs={'class': 'form-control'}),
         }
+
+class ChercherMachineForm(Form):
+    nom_machine = CharField(label='Rechercher une machine', max_length=100)
+    def __init__(self, *args, **kwargs):
+        super(ChercherMachineForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'

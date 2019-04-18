@@ -12,7 +12,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.core.exceptions import ObjectDoesNotExist
 
 from .models import MODSOUser, Machine
-from .forms import MODSOUserForm, CreerMachineForm, ModifierMachineForm
+from .forms import MODSOUserForm, CreerMachineForm, ModifierMachineForm, ChercherMachineForm
 
 ERREUR_SERVEUR = "Une erreur est survenu durant l'enregistrement de vos informations en base de donnée. Veuillez réessayer. Si l'erreur persiste, merci de contacter le support technique."
 
@@ -219,8 +219,23 @@ def listerMachinesUtilisateur(request):
 # Lister toutes les machines
 @login_required
 def listerMachines(request):
-    machines = Machine.objects.all()
-    context = {'machines' : machines}
+    if request.method == 'POST':
+        isRecherche = True
+        form = ChercherMachineForm(request.POST)
+        if form.is_valid():
+            nom_machine = form.cleaned_data['nom_machine']
+            machines = Machine.objects.filter(nom__icontains=nom_machine)
+            if not machines:
+                machines = Machine.objects.filter(description__icontains=nom_machine)
+                if not machines:
+                    messages.add_message(request, messages.WARNING, "La recherche n'a rien retourné.")
+        else : 
+            messages.add_message(request, messages.ERROR, "Le formulaire n'est pas valide.")
+    else :
+        isRecherche = False
+        form = ChercherMachineForm()
+        machines = Machine.objects.all()
+    context = {'machines' : machines, 'form': form, 'isRecherche': isRecherche }
     return render(request, 'gestionMachines/machines/listemachines.html', context)
 
 class MachineView(DetailView):

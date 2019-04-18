@@ -4,9 +4,24 @@
 
 {% block machines_content %}
     <div class="container">
+        {% if isRecherche %}
+            <div class="row">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'machines:machines' %}">Liste des machines</a></li>
+                    <li class="active">Résultats de recherche</li>
+                </ol>
+            </div>
+            <br>
+        {% endif %}
+            <br>
+            <div class="form-group">
+                <form action="{% url 'machines:machines' %}" method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                </form>
+            </div>
 
-			<div class="row">
-				
+            <div class="row">
 				<article class="col maincontent">
 					<header class="page-header">
 						<h1 class="page-title">Machines</h1>
@@ -61,5 +76,5 @@
 
 				</article>
 			</div>
-		</div>	<!-- /container -->
+		</div>
 {% endblock %}
